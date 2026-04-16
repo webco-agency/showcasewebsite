@@ -3,12 +3,11 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
-  { href: "/#gallery", label: "Gallery" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/#about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ]
@@ -27,97 +26,108 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-border"
+          ? "bg-background/98 backdrop-blur-sm"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      {/* Top decorative line */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
-          <Link href="/" className="relative group">
-            <span className="text-3xl font-light tracking-[0.2em] text-foreground">
-              flefals
-            </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+          <Link href="/" className="relative group flex items-center gap-3">
+            <div className="w-10 h-10 border border-primary/40 flex items-center justify-center">
+              <span className="text-primary text-lg">ق</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-2xl tracking-[0.3em] text-foreground font-light">
+                AL QASR
+              </span>
+              <span className="text-[10px] tracking-[0.4em] text-primary/60 uppercase">
+                Fine Dining
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-12">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative text-sm tracking-[0.15em] uppercase text-foreground/80 hover:text-foreground transition-colors duration-300 group"
+                className="relative text-xs tracking-[0.25em] uppercase text-foreground/70 hover:text-primary transition-colors duration-500 hover-underline"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-4">
-            <a href="tel:+1234567890">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-foreground/80 hover:text-foreground hover:bg-transparent gap-2"
-              >
-                <Phone className="w-4 h-4" />
-                <span className="tracking-wider">Call Us</span>
-              </Button>
-            </a>
-            <Button
-              className="bg-primary text-primary-foreground hover:bg-primary/90 tracking-[0.15em] uppercase text-xs px-6"
+          <div className="hidden lg:flex items-center gap-6">
+            <a 
+              href="tel:+1234567890"
+              className="flex items-center gap-2 text-foreground/70 hover:text-primary transition-colors"
             >
-              Book a Table
-            </Button>
+              <Phone className="w-4 h-4" />
+              <span className="text-xs tracking-widest">+1 234 567 890</span>
+            </a>
+            <div className="h-6 w-px bg-border" />
+            <Link
+              href="/#contact"
+              className="relative overflow-hidden group px-8 py-3 border border-primary/40 hover:border-primary transition-colors"
+            >
+              <span className="relative z-10 text-xs tracking-[0.25em] uppercase text-foreground group-hover:text-primary-foreground transition-colors duration-300">
+                Reserve
+              </span>
+              <div className="absolute inset-0 bg-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-foreground"
+            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ${
-            isOpen ? "max-h-96 pb-6" : "max-h-0"
-          }`}
-        >
-          <div className="flex flex-col gap-4 pt-4 border-t border-border">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-sm tracking-[0.15em] uppercase text-foreground/80 hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="flex flex-col gap-3 pt-4">
-              <a href="tel:+1234567890" className="w-full">
-                <Button
-                  variant="outline"
-                  className="w-full gap-2 border-border text-foreground"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call Us
-                </Button>
-              </a>
-              <Button className="w-full bg-primary text-primary-foreground tracking-[0.15em] uppercase text-xs">
-                Book a Table
-              </Button>
-            </div>
-          </div>
+      {/* Mobile Navigation */}
+      <div
+        className={`lg:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        style={{ top: "97px" }}
+      >
+        <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+          {navLinks.map((link, index) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="text-2xl tracking-[0.3em] uppercase text-foreground/80 hover:text-primary transition-colors"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="h-px w-24 bg-primary/30 my-4" />
+          <a href="tel:+1234567890" className="flex items-center gap-3 text-primary">
+            <Phone className="w-5 h-5" />
+            <span className="tracking-widest">+1 234 567 890</span>
+          </a>
+          <Link
+            href="/#contact"
+            onClick={() => setIsOpen(false)}
+            className="mt-4 px-12 py-4 border border-primary text-primary tracking-[0.25em] uppercase text-sm hover:bg-primary hover:text-primary-foreground transition-all"
+          >
+            Reserve a Table
+          </Link>
         </div>
       </div>
     </nav>

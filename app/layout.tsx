@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Inter } from 'next/font/google'
+import { Playfair_Display, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const cormorant = Cormorant_Garamond({ 
+const playfair = Playfair_Display({ 
   subsets: ["latin"],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-cormorant'
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-playfair'
 })
 
 const inter = Inter({ 
@@ -15,9 +15,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Flefals | Fine Dining Experience',
-  description: 'Experience culinary excellence at Flefals. A sophisticated dining destination where exquisite flavors meet elegant ambiance.',
-  keywords: ['restaurant', 'fine dining', 'Flefals', 'gourmet', 'cuisine'],
+  title: 'Al Qasr | Authentic Middle Eastern Cuisine',
+  description: 'Experience the finest Middle Eastern cuisine at Al Qasr. Where ancient traditions meet modern culinary excellence.',
+  keywords: ['restaurant', 'middle eastern', 'arabic cuisine', 'fine dining', 'Al Qasr'],
 }
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${cormorant.variable} ${inter.variable} font-serif antialiased`}>
+      <body className={`${playfair.variable} ${inter.variable} font-serif antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
